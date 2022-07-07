@@ -2,10 +2,14 @@
   --primary: #f9ed69;
   --secondary: #00adb5;
 
+  width: 600px;
+  height: 150px;
   display: flex;
-  width: 700px;
   justify-content: center;
   align-items: center;
+  background-color: #fc5185;
+  border-radius: 10px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   gap: 4px;
 }
 
