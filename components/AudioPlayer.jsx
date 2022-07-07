@@ -39,6 +39,12 @@ const AudioPlayer = () => {
     }
   };
 
+  const handleSetMetadata = () => {
+    const seconds = audioRef.current.duration;
+    progressBarRef.current.max = seconds;
+    setDuration(seconds);
+  };
+
   const changeRange = () => {
     audioRef.current.currentTime = progressBarRef.current.value;
     changePlayerCurrentTime();
@@ -55,15 +61,8 @@ const AudioPlayer = () => {
   };
 
   useEffect(() => {
-    if (
-      audioRef.current &&
-      audioRef.current.duration &&
-      progressBarRef.current
-    ) {
-      const seconds = audioRef.current.duration;
-      progressBarRef.current.max = seconds;
-      setDuration(seconds);
-    }
+    if (audioRef.current && audioRef.current.duration && progressBarRef.current)
+      handleSetMetadata();
   }, []);
 
   return (
@@ -74,6 +73,7 @@ const AudioPlayer = () => {
         onBackFifteen={backFifteen}
         onForwardFifteen={forwardFifteen}
         onToogglePlayPause={togglePlayPause}
+        onLoadedMetadata={handleSetMetadata}
       />
 
       <ProgressBar

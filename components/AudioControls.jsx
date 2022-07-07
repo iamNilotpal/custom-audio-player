@@ -8,6 +8,7 @@ const AudioControls = ({
   onToogglePlayPause,
   onBackFifteen,
   onForwardFifteen,
+  onLoadedMetadata,
 }) => {
   return (
     <div className={styles.controls}>
@@ -15,6 +16,7 @@ const AudioControls = ({
         ref={audioRef}
         src='https://morexlusive.com/wp-content/uploads/2021/07/Dean_Lewis_-_Be_Alright.mp3'
         preload='metadata'
+        onLoadedMetadata={onLoadedMetadata}
       ></audio>
 
       {/* Play/Pause, Forward and Backward Buttons */}
