@@ -1,49 +1,87 @@
-import { useState } from 'react';
-import { BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
-import { FaPause, FaPlay } from 'react-icons/fa';
+import { useEffect, useRef, useState } from 'react';
 import styles from '../styles/AudioPlayer.module.css';
+import AudioControls from './AudioControls';
+import ProgressBar from './ProgressBar';
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+
+  // References
+  const audioRef = useRef(); // Audio element reference
+  const progressBarRef = useRef(); // Progress bar ref
+  const animationRef = useRef(); // Animation for progress while playing audio
+
+  const changePlayerCurrentTime = () => {
+    progressBarRef.current.style.setProperty(
+      '--seek-before-width',
+      `${(progressBarRef.current.value / duration) * 100}%`
+    );
+    setCurrentTime(audioRef.current.currentTime);
+  };
+
+  const whilePlaying = () => {
+    progressBarRef.current.value = audioRef.current.currentTime;
+    changePlayerCurrentTime();
+    animationRef.current = requestAnimationFrame(whilePlaying);
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying((state) => !state);
+
+    if (!isPlaying) {
+      audioRef.current?.play();
+      animationRef.current = requestAnimationFrame(whilePlaying);
+    } else {
+      audioRef.current?.pause();
+      cancelAnimationFrame(animationRef.current);
+    }
+  };
+
+  const changeRange = () => {
+    audioRef.current.currentTime = progressBarRef.current.value;
+    changePlayerCurrentTime();
+  };
+
+  const backFifteen = () => {
+    progressBarRef.current.value = +progressBarRef.current.value - 15;
+    changeRange();
+  };
+
+  const forwardFifteen = () => {
+    progressBarRef.current.value = +progressBarRef.current.value + 15;
+    changeRange();
+  };
+
+  useEffect(() => {
+    if (
+      audioRef.current &&
+      audioRef.current.duration &&
+      progressBarRef.current
+    ) {
+      const seconds = audioRef.current.duration;
+      progressBarRef.current.max = seconds;
+      setDuration(seconds);
+    }
+  }, []);
 
   return (
     <div className={styles.audioPlayer}>
-      <div className={styles.controls}>
-        <audio
-          src='https://legitmuzic.com/wp-content/uploads/2022/03/Dean_Lewis_-_Hurtless_legitmuzic.com.mp3'
-          preload='metadata'
-        ></audio>
+      <AudioControls
+        isPlaying={isPlaying}
+        audioRef={audioRef}
+        onBackFifteen={backFifteen}
+        onForwardFifteen={forwardFifteen}
+        onToogglePlayPause={togglePlayPause}
+      />
 
-        {/* Play/Pause, Forward and Backward Buttons */}
-        <button type='button' className={styles.forwardBackward}>
-          <BsArrowLeftShort />
-          10
-        </button>
-        <button
-          type='button'
-          onClick={() => setIsPlaying(!isPlaying)}
-          className={styles.playPause}
-        >
-          {isPlaying ? <FaPause /> : <FaPlay />}
-        </button>
-        <button type='button' className={styles.forwardBackward}>
-          <BsArrowRightShort />
-          10
-        </button>
-      </div>
-
-      <div className={styles.times}>
-        {/* Current Time */}
-        <div className={styles.currentTime}>0:00</div>
-
-        {/* Progress Bar */}
-        <div>
-          <input type='range' name='progressBar' />
-        </div>
-
-        {/* Duration */}
-        <div className={styles.duration}>3:40</div>
-      </div>
+      <ProgressBar
+        currentTime={currentTime}
+        duration={duration}
+        progressBarRef={progressBarRef}
+        onChangeRange={changeRange}
+      />
     </div>
   );
 };
