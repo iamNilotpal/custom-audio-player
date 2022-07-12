@@ -1,19 +1,19 @@
 import Head from 'next/head';
 import AudioPlayer from '../components/AudioPlayer';
-import styles from '../styles/Home.module.css';
+import Border from '../components/Border';
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <main>
       <Head>
         <title>Audio Player</title>
         <meta name='description' content='Custom audio player' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-
-      <main className={styles.main}>
+      <Border />
+      <section>
         <AudioPlayer />
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }

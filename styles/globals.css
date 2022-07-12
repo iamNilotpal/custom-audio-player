@@ -1,16 +1,37 @@
 :root {
-  --background: #264653;
-  --text-color: #fff;
+  --background: #101010;
+  --text-color: #f9f4da;
+  --purple: #a42ce9;
+  --blue: #2d7fea;
+  --gold: #ffd500;
+  --yellow: #f4f73e;
+  --pink: #eb30c1;
+  --aqua: #2febd2;
+  --gray: #282c35;
+}
+
+* {
+  padding: 0;
+  margin: 0;
 }
 
 html,
 body {
-  padding: 0;
-  margin: 0;
+  width: 100%;
+  min-height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-color: var(--background);
   color: var(--text-color);
+  font-weight: 500;
+}
+
+section {
+  padding: 2rem;
+  height: calc(100vh - 8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 a {
@@ -24,4 +45,17 @@ a {
 
 button {
   cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.border {
+  display: flex;
+}
+
+.border-item {
+  width: 100%;
+  height: 8px;
 }

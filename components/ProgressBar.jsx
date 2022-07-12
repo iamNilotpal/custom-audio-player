@@ -10,7 +10,7 @@ const ProgressBar = ({
   return (
     <div className={styles.times}>
       {/* Current Time */}
-      <div className={styles.currentTime}>{calculateTime(currentTime)}</div>
+      <p className={styles.currentTime}>{calculateTime(currentTime)}</p>
 
       {/* Progress Bar */}
       <input
@@ -23,7 +23,7 @@ const ProgressBar = ({
       />
 
       {/* Duration */}
-      <div className={styles.duration}>{calculateTime(duration)}</div>
+      <p className={styles.duration}>{calculateTime(duration)}</p>
     </div>
   );
 };
