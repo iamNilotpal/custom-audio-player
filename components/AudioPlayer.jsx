@@ -50,13 +50,11 @@ const AudioPlayer = () => {
     changePlayerCurrentTime();
   };
 
-  const backFifteen = () => {
-    progressBarRef.current.value = +progressBarRef.current.value - 15;
-    changeRange();
-  };
+  const backFifteen = () => timeTravel(-15);
+  const forwardFifteen = () => timeTravel(15);
 
-  const forwardFifteen = () => {
-    progressBarRef.current.value = +progressBarRef.current.value + 15;
+  const timeTravel = (newTime) => {
+    progressBarRef.current.value = +progressBarRef.current.value + newTime;
     changeRange();
   };
 
@@ -64,6 +62,14 @@ const AudioPlayer = () => {
     if (audioRef.current && audioRef.current.duration && progressBarRef.current)
       handleSetMetadata();
   }, []);
+
+  useEffect(() => {
+    if (currentTime === duration) {
+      timeTravel(-duration);
+      togglePlayPause();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTime]);
 
   return (
     <div className={styles.audioPlayer}>

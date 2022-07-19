@@ -14,7 +14,7 @@ const AudioControls = ({
     <div className={styles.controls}>
       <audio
         ref={audioRef}
-        src='https://morexlusive.com/wp-content/uploads/2021/07/Dean_Lewis_-_Be_Alright.mp3'
+        src='https://www.soundboard.com/mediafiles/mz/Mzg1ODMxNTIzMzg1ODM3_JzthsfvUY24.MP3'
         preload='metadata'
         onLoadedMetadata={onLoadedMetadata}
       ></audio>
