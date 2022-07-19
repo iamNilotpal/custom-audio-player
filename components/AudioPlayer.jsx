@@ -18,7 +18,7 @@ const AudioPlayer = () => {
       '--seek-before-width',
       `${(progressBarRef.current.value / duration) * 100}%`
     );
-    setCurrentTime(audioRef.current.currentTime);
+    setCurrentTime(+audioRef.current.currentTime);
   };
 
   const whilePlaying = () => {
@@ -31,7 +31,7 @@ const AudioPlayer = () => {
     setIsPlaying((state) => !state);
 
     if (!isPlaying) {
-      audioRef.current?.play();
+      audioRef.current.play();
       animationRef.current = requestAnimationFrame(whilePlaying);
     } else {
       audioRef.current?.pause();
@@ -40,7 +40,7 @@ const AudioPlayer = () => {
   };
 
   const handleSetMetadata = () => {
-    const seconds = audioRef.current.duration;
+    const seconds = +audioRef.current.duration;
     progressBarRef.current.max = seconds;
     setDuration(seconds);
   };
